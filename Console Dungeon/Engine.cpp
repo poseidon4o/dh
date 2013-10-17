@@ -118,7 +118,7 @@ void Engine::clear(){
 	this->lastCol = this->lastRow = 0;
 }
 
-void Engine::fill(RECT area,char fill) {
+void Engine::fill(RECT &area,char fill) {
 	if( !this->_inBounds(area) )
 		return;
 	for (int row = area.top; row <= area.bottom; ++row)
@@ -202,7 +202,7 @@ void Engine::operator()(const char *str,int len){
 	this->operator()(this->lastCol,this->lastRow,str,len);
 }
 
-bool Engine::_inBounds(RECT area) const {
+bool Engine::_inBounds(RECT &area) const {
 	return area.top >= 0 && area.top < this->rows && 
 		   area.bottom >= 0 && area.bottom < this->rows &&
 		   area.left >= 0 && area.left < this->cols && 
@@ -214,10 +214,10 @@ void Engine::_moveConsole(int x,int y) const{
 }
 
 void Engine::_hideBrush() const {
-    CONSOLE_CURSOR_INFO cur;
-    cur.dwSize = 1;
-    cur.bVisible = false;  
-    SetConsoleCursorInfo(this->console, &cur);
+	CONSOLE_CURSOR_INFO cur;
+	cur.dwSize = 1;
+	cur.bVisible = false;  
+	SetConsoleCursorInfo(this->console, &cur);
 }
 
 void Engine::_endLine(int row){
@@ -254,10 +254,10 @@ void Engine::_resizeConsole(int rows,int cols) const{
 	delete[] buf;
 
 	SMALL_RECT Rect;
-    Rect.Top = 0;
-    Rect.Left = 0;
-    Rect.Bottom = rows+1;
-    Rect.Right = cols+1;
+	Rect.Top = 0;
+	Rect.Left = 0;
+	Rect.Bottom = rows+1;
+	Rect.Right = cols+1;
 	SetConsoleWindowInfo(this->console, TRUE, &Rect);
 
 

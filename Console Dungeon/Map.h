@@ -11,11 +11,16 @@ public:
 	int getCeilingHeight(int) const;
 	void getSlice(int,int *,int *) const;
 	int getSliceHeight(int) const;
+	int operator()(int) const;
 	int getOffset() const;
+
+	int getHighestBetween(int,int) const;
+
 	void setOffset(int);
 	void draw();
 	void erase();
 	void fullErase();
+
 	Map& operator++();
 	Map& operator--();
 	Map& operator+=(int);

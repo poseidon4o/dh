@@ -3,7 +3,7 @@
 class Object
 {
 public:
-	Object(Engine &e,Texture t,int x = 0,int y = 0);
+	Object(Engine &,Texture &,int x = 0,int y = 0);
 	void setX(int);
 	void setY(int);
 	int getX() const;
@@ -23,7 +23,6 @@ protected:
 	const float G;
 	int h;
 	int w;
-	struct {int height,width;} size;
 	int height;
 	int width;
 	struct {int x,y;} position;

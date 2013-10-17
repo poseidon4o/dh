@@ -5,6 +5,7 @@ Creature::Creature() {
 	this->state.alive = true;
 	this->state.incapacitated = false;
 	this->state.stunned = false;
+	this->hp.current = this->hp.max = 100;
 }
 
 float Creature::doDamage(DamageType t) {

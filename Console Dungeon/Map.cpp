@@ -80,6 +80,7 @@ Map& Map::operator--() {
 
 Map& Map::operator+=(int move) {
 	this->setOffset(this->offset + move);
+	this->fullErase();
 	return *this;
 }
 
@@ -95,11 +96,31 @@ void Map::setOffset(int off) {
 	this->offset = this->width - this->engine->getWidth() >= off && off >= 0 ? off : this->offset;
 }
 
+int Map::getHighestBetween(int start,int end) const {
+	if( end < start ) {
+		int tmp = start;
+		start = end;
+		end = tmp;
+	}
+	if( !this->_validPostion(start) || !this->_validPostion(end) )
+		return -1;
+
+	int max = -1;
+	for(;start <= end; ++start)
+		if( this->floor[start] > max )
+			max = this->floor[start];
+	return max;
+}
+
 int Map::getSliceHeight(int pos) const {
 	if( this->_validPostion(pos) )
 		return this->height - (int)this->floor[pos] - (int)this->ceiling[pos];
 	else
 		return -1;
+}
+
+int Map::operator()(int pos) const {
+	return this->getFloorHeight(pos);
 }
 
 void Map::getSlice(int pos,int *top,int *bot) const{

@@ -77,6 +77,9 @@
     <Report>
       <Path>Console Dungeon130603.vsp</Path>
     </Report>
+    <Report>
+      <Path>Console Dungeon130627.vsp</Path>
+    </Report>
   </Reports>
   <Launches>
     <ProjBinary>

@@ -15,7 +15,7 @@ public:
 	void drawLineH(int,int,int,const char *);
 	void drawLineV(int,int,int,char);
 	void drawLineV(int,int,int,const char *);
-	void fill(RECT,char);
+	void fill(RECT &,char);
 
 	void draw(DrawMethod d = Brush);
 	void clear();
@@ -45,7 +45,7 @@ protected:
 	void _hideBrush() const;
 	void _setFontSize(int x = 1,int y = 1) const;
 	void _line(RECT,const char*);
-	bool _inBounds(RECT) const;
+	bool _inBounds(RECT &) const;
 private:
 	void operator=(const Engine &);
 	Engine(const Engine &);

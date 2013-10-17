@@ -2,10 +2,12 @@
 #pragma warning(disable: 4996)
 
 
-Object::Object(Engine &e,Texture t,int x,int y): engine(&e), G(9.81) {
+Object::Object(Engine &e,Texture &t,int x,int y): engine(&e), G(9.81) {
 	this->texture = t;
 	this->setX(x);
 	this->setY(y);
+	this->width = t.getWidth();
+	this->height = t.getHeight();
 }
 
 
