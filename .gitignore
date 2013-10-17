@@ -32,6 +32,7 @@
 *.user
 *.sln.docstates
 *.vcxproj
+*.filters
 *.sln
 
 # Build results

@@ -96,6 +96,10 @@ void Map::setOffset(int off) {
 	this->offset = this->width - this->engine->getWidth() >= off && off >= 0 ? off : this->offset;
 }
 
+int Map::getHighestBetweenRelative(int start,int end) const {
+	return this->getHighestBetween(start + this->offset, end + this->offset);
+}
+
 int Map::getHighestBetween(int start,int end) const {
 	if( end < start ) {
 		int tmp = start;

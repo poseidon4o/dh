@@ -33,14 +33,15 @@ void Player::move() {
 	int mv = this->_x();
 	if( !mv ) return;
 	
-	this->position.y = this->engine->getHeight() - this->map.getHighestBetween(this->position.x,this->position.x + this->width) - this->height;
+	this->position.y = this->engine->getHeight() - this->map.getHighestBetweenRelative(this->position.x,this->position.x + this->width) - this->height;
 
 	(*this->engine)(0,2,"");
 	(*this->engine)(this->position.x);
 	(*this->engine)(0,3,"");
 	(*this->engine)(mv);
 	
-
+	if( this->position.x + mv < 0 || this->position.x + this->width + mv > this->engine->getWidth() )
+		return;
 	
 
 	if(mv > 0) {
@@ -52,7 +53,7 @@ void Player::move() {
 		}
 	} else {
 		// moving left
-		if( this->position.x < this->engine->getWidth() * 0.2 ) {
+		if( this->position.x < this->engine->getWidth() * 0.2 && this->map.getOffset() ) {
 			this->map += mv;
 		} else {
 			this->position.x += mv;

@@ -15,6 +15,7 @@ public:
 	int getOffset() const;
 
 	int getHighestBetween(int,int) const;
+	int getHighestBetweenRelative(int,int) const;
 
 	void setOffset(int);
 	void draw();
