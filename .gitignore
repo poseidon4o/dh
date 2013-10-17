@@ -31,6 +31,8 @@
 *.suo
 *.user
 *.sln.docstates
+*.vcxproj
+*.sln
 
 # Build results
 
