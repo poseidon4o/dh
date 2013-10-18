@@ -10,20 +10,18 @@ const int hudHeight = 15;
 int _tmain(int argc, _TCHAR* argv[])
 {
 	
-
-	//for(int c = 0; c <= 255; c++) cout << (char)c << " " << c << endl;
 	Engine p(width,height,1);
 	Map map(p,width*20,height-hudHeight);
-	char t_data[10] = "xxxxxxxxx";
-	Texture text(3,3,t_data);
+	char t_data[1000] = "                                                                                                                                             /O\           x ^ x     (@@)x  |  x(@@) (@)x  |  x(@)      x | x            x       ";
+	//char t_data[100] = "  (     @(    @@    ))    xx   x  x /     O^|||x\      x  x   xx    ((    @@    @)    )   ";
+	//char t_data[100] = "xxxxxx  xx  ";
+	Texture text(15,15,t_data);
 
 	Player obj(p,text,10,30,map);
 
 
 	p.clear();
 	while (true) {
-		//if( GetAsyncKeyState(VK_LEFT) )	--map;
-		//if( GetAsyncKeyState(VK_RIGHT) ) ++map;
 		
 		map.erase();
 		obj.erase();		

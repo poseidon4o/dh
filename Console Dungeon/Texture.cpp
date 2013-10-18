@@ -12,11 +12,11 @@ Texture::Texture(int width,int height,const char *buf): texture(NULL) {
 }
 
 Texture::Texture(const Texture &t): texture(NULL) {
-	this->texture = new char*[t.getWidth()];
-	for(int w = 0; w < t.getWidth(); ++w){
-		this->texture[w] = new char[t.getHeight()];
-		for(int h = 0; h < t.getHeight(); ++h){
-			this->texture[w][h] = t.getTexture()[w][h];
+	this->texture = new char*[t.height];
+	for(int h = 0; h < t.height; ++h){
+		this->texture[h] = new char[t.width];
+		for(int w = 0; w < t.width; ++w){
+			this->texture[h][w] = t.texture[h][w];
 		}
 	}			
 }
@@ -29,11 +29,11 @@ Texture& Texture::operator=(const Texture &t) {
 		delete[] this->texture[w];
 	delete[] this->texture;
 
-	this->texture = new char*[t.getWidth()];
-	for(int w = 0; w < t.getWidth(); ++w){
-		this->texture[w] = new char[t.getHeight()];
-		for(int h = 0; h < t.getHeight(); ++h){
-			this->texture[w][h] = t.getTexture()[w][h];
+	this->texture = new char*[t.height];
+	for(int h = 0; h < t.height; ++h){
+		this->texture[h] = new char[t.width];
+		for(int w = 0; w < t.width; ++w){
+			this->texture[h][w] = t.texture[h][w];
 		}
 	}
 }
@@ -52,16 +52,18 @@ const char **Texture::getTexture() const {
 
 void Texture::init(int width,int height,const char *buf) {
 	this->isInit = true;
-	if( width < 0 || height < 0 || strlen(buf) < height * width) 
+	if( width < 0 || height < 0 ) 
 		return;
 	this->width = width;
 	this->height = height;
-	this->texture = new char*[width];
+	this->texture = new char*[height];
 	int c = 0;
-	for(int w = 0; w < width; w++){
-		this->texture[w] = new char[height];
-		for(int h = 0; h < height; h++)
-			this->texture[w][h] = buf[c++];
+
+	for(int h = 0; h < height; ++h) {
+		this->texture[h] = new char[width];
+		for(int w = 0; w < width; ++w) {
+			this->texture[h][w] = buf[c++];
+		}
 	}
 }
 

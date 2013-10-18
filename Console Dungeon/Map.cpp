@@ -33,10 +33,14 @@ void Map::draw() {
 	int h = this->engine->getHeight();
 	this->lastDrawnOffset = this->offset;
 	for (int c = 0; c < w; ++c) {
-		for (int r = h - this->floor[c + this->offset]; r < h; ++r)
+		for (int r = h - this->floor[c + this->offset]; r < h; ++r) {
 			(*this->engine)(c,r,this->floorPixel);
-		for (int r = h - this->height+1; r <= h - this->height + this->ceiling[c + this->offset]; ++r)
+		}
+		
+		for (int r = h - this->height+1; r <= h - this->height + this->ceiling[c + this->offset]; ++r) {
 			(*this->engine)(c,r,this->ceilingPixel);
+		}
+			
 
 
 		(*this->engine)(c,h - this->height,'_');
@@ -113,6 +117,7 @@ int Map::getHighestBetween(int start,int end) const {
 	for(;start <= end; ++start)
 		if( this->floor[start] > max )
 			max = this->floor[start];
+
 	return max;
 }
 

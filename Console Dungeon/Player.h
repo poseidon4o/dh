@@ -9,6 +9,9 @@ public:
 
 	void move();
 protected:
+	void _moveY();
+	void _moveX();
+
 	int _x() const;
 	bool _j() const;
 
@@ -18,7 +21,10 @@ protected:
 	int speed;
 
 
-	bool _inAir() const;;
+	bool _inAir() const;
+	bool _inGround() const;
+
+	int _fallTime;
 
 	Map &map;
 };

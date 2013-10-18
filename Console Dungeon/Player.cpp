@@ -15,9 +15,11 @@ bool Player::_j() const {
 }
 
 bool Player::_inAir() const {
-	for(int c = 0; c < this->width; ++c)
-		if( this->map(c + this->position.x) <= this->height + this->position.y )
-			return false;
+	return this->position.y < this->engine->getHeight() - this->map.getHighestBetweenRelative(this->position.x,this->position.x + this->width-1) - this->height;
+}
+
+bool Player::_inGround() const {
+	return this->position.y > this->engine->getHeight() - this->map.getHighestBetweenRelative(this->position.x,this->position.x + this->width-1) - this->height;
 }
 
 void Player::move() {
@@ -27,21 +29,22 @@ void Player::move() {
 		return;
 
 	lastCall = GetTickCount();
+	this->_moveX();
+	this->_moveY();
+}
 
-	//if( this->_inAir() ) this->position.y++;
-	
+void Player::_moveX() {
 	int mv = this->_x();
-	if( !mv ) return;
-	
-	this->position.y = this->engine->getHeight() - this->map.getHighestBetweenRelative(this->position.x,this->position.x + this->width) - this->height;
+	if( !mv ) return;	
 
-	(*this->engine)(0,2,"");
-	(*this->engine)(this->position.x);
-	(*this->engine)(0,3,"");
-	(*this->engine)(mv);
-	
-	if( this->position.x + mv < 0 || this->position.x + this->width + mv > this->engine->getWidth() )
+	if( this->position.x + mv < 0 ) {
+		this->position.x = 0;
 		return;
+	}
+	if( this->position.x + this->width + mv > this->engine->getWidth() ) {
+		this->position.x = this->engine->getWidth() - this->width;
+		return;
+	}
 	
 
 	if(mv > 0) {
@@ -59,9 +62,17 @@ void Player::move() {
 			this->position.x += mv;
 		}
 	}
-	return;
+}
 
-	
+void Player::_moveY() {
+	if( this->_inAir() ) 
+		this->position.y++;
+
+	if( this->_inGround() )
+		this->position.y = this->engine->getHeight() - this->map.getHighestBetweenRelative(this->position.x,this->position.x + this->width-1) - this->height;
+
+	if( !this->_inAir() && this->_j() ) {
 
 
+	}
 }
