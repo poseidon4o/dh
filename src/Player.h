@@ -1,5 +1,9 @@
 #pragma once
-#include "stdafx.h"
+#include "common.h"
+#include "Creature.h"
+#include "Object.h"
+#include "Map.h"
+
 class Player :
 	public Creature,
 	public Object

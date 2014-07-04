@@ -1,6 +1,5 @@
-#include "stdafx.h"
 #include "Texture.h"
-
+#include <stddef.h>
 
 Texture::Texture(): texture(NULL) {
 	this->isInit = false;
@@ -18,7 +17,7 @@ Texture::Texture(const Texture &t): texture(NULL) {
 		for(int w = 0; w < t.width; ++w){
 			this->texture[h][w] = t.texture[h][w];
 		}
-	}			
+	}
 }
 
 Texture& Texture::operator=(const Texture &t) {
@@ -36,6 +35,7 @@ Texture& Texture::operator=(const Texture &t) {
 			this->texture[h][w] = t.texture[h][w];
 		}
 	}
+	return *this;
 }
 
 int Texture::getWidth() const {
@@ -52,13 +52,13 @@ const char **Texture::getTexture() const {
 
 void Texture::init(int width,int height,const char *buf) {
 	this->isInit = true;
-	if( width < 0 || height < 0 ) 
+	if( width < 0 || height < 0 )
 		return;
 	this->width = width;
 	this->height = height;
-	this->texture = new char*[height];
 	int c = 0;
 
+    this->texture = new char*[height];
 	for(int h = 0; h < height; ++h) {
 		this->texture[h] = new char[width];
 		for(int w = 0; w < width; ++w) {

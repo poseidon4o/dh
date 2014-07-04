@@ -1,5 +1,8 @@
 #pragma once
-#include "stdafx.h"
+#include "common.h"
+#include "Engine.h"
+#include "Texture.h"
+
 class Object
 {
 public:

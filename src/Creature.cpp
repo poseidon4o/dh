@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "common.h"
 #include "Creature.h"
 
 Creature::Creature() {
@@ -34,7 +34,7 @@ void Creature::die() {
 }
 
 bool Creature::levelUp() {
-	if( this->xp / (this->level * 100) < 1 ) 
+	if( this->xp / (this->level * 100) < 1 )
 		return false;
 	this->xp -= this->level * 100;
 	this->level++;

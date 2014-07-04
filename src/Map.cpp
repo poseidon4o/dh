@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Map.h"
 
 Map::Map(Engine &e,int width,int height): floor(NULL), ceiling(NULL), maxInclination(10), engine(&e), offset(0) {
@@ -20,7 +19,7 @@ void Map::_generate() {
 	for (int c = 1; c < this->width; ++c) {
 		int move = this->floor[c-1] + rand() % 3 - 1;
 		this->floor[c] = move > 0 && move <= this->maxInclination ? move : this->floor[c-1];
-		move = this->ceiling[c-1] + rand() % 3 - 1; 
+		move = this->ceiling[c-1] + rand() % 3 - 1;
 		this->ceiling[c] = move > 0 && move <= this->maxInclination ? move : this->ceiling[c-1];
 	}
 }
@@ -36,11 +35,11 @@ void Map::draw() {
 		for (int r = h - this->floor[c + this->offset]; r < h; ++r) {
 			(*this->engine)(c,r,this->floorPixel);
 		}
-		
+
 		for (int r = h - this->height+1; r <= h - this->height + this->ceiling[c + this->offset]; ++r) {
 			(*this->engine)(c,r,this->ceilingPixel);
 		}
-			
+
 
 
 		(*this->engine)(c,h - this->height,'_');
@@ -149,7 +148,7 @@ int Map::getCeilingHeight(int pos) const {
 }
 
 int Map::getFloorHeight(int pos) const {
-	if( this->_validPostion(pos) ) 
+	if( this->_validPostion(pos) )
 		return (int) this->floor[pos];
 	else
 		return -1;

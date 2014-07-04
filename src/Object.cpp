@@ -1,6 +1,4 @@
-#include "stdafx.h"
-#pragma warning(disable: 4996)
-
+#include "Object.h"
 
 Object::Object(Engine &e,Texture &t,int x,int y): engine(&e), G(9.81) {
 	this->texture = t;

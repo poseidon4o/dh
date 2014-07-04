@@ -1,5 +1,10 @@
-#include "stdafx.h"
-#pragma warning(disable: 4996)
+#include "common.h"
+#include "Engine.h"
+#include <cstdio>
+#include <iostream>
+
+using std::cout;
+using std::flush;
 
 Engine::Engine(int cols,int rows,bool debug): debug(debug), field(NULL), nextFrame(NULL) {
 	this->pixelSize.x = 6;
@@ -10,7 +15,7 @@ Engine::Engine(int cols,int rows,bool debug): debug(debug), field(NULL), nextFra
 	for (int c = 0; c < rows; ++c)	{
 		this->field[c] = new char[cols];
 		this->nextFrame[c] = new char[cols];
-		for (int r = 0; r < cols; ++r) 
+		for (int r = 0; r < cols; ++r)
 			this->nextFrame[c][r] = this->field[c][r] = ' ';
 	}
 	this->_setFontSize(this->pixelSize.x,this->pixelSize.y);
@@ -43,7 +48,6 @@ void Engine::draw(DrawMethod d) {
 	} else {
 		// TODO: optimise to draw larger blocks than 1 line
 		for (int row = 0; row < this->rows; ++row)	{
-			bool endLine = false;
 			for (int col = 0; col < this->cols; ++col)	{
 				if( this->field[row][col] != this->nextFrame[row][col] ){
 					int len = 0;
@@ -71,14 +75,14 @@ void Engine::draw(DrawMethod d) {
 		if( this->drawTime ) {
 			this->_moveBrush(this->rows,0);
 			printf("Last draw time: %d    ",this->drawTime);
-			
+
 		}
 		if( this->pixelsDrawn ) {
 			this->_moveBrush(this->rows+1,0);
 			printf("Last drawn pixels: %d   ",this->pixelsDrawn);
 		}
-		
-		
+
+
 	}
 }
 
@@ -107,7 +111,7 @@ void Engine::_getNextBlock(int row,int col,char * buf){
 			col++;
 		} else {
 			break;
-		}		
+		}
 	}
 }
 
@@ -122,7 +126,7 @@ void Engine::fill(RECT &area,char fill) {
 	if( !this->_inBounds(area) )
 		return;
 	for (int row = area.top; row <= area.bottom; ++row)
-		for (int col = area.left; col <= area.right; ++col) 
+		for (int col = area.left; col <= area.right; ++col)
 			this->nextFrame[row][col] = fill;
 
 	this->lastCol = area.right;
@@ -180,14 +184,14 @@ void Engine::operator()(int col,int row,const char *str,int len){
 	int c = 0;
 	for( ; c < len && (col + c) < this->cols; c++)
 		this->nextFrame[row][col+c] = str[c];
-	
+
 	this->lastRow = row;
 	this->lastCol = col + c;
 }
 
 void Engine::operator()(int x){
 	char str[40];
-	this->operator()(this->lastCol,this->lastRow,str,sprintf_s(str, 40,"%d",x));
+	this->operator()(this->lastCol,this->lastRow,str,sprintf(str,"%d",x));
 }
 
 void Engine::operator()(char c){
@@ -203,9 +207,9 @@ void Engine::operator()(const char *str,int len){
 }
 
 bool Engine::_inBounds(RECT &area) const {
-	return area.top >= 0 && area.top < this->rows && 
+	return area.top >= 0 && area.top < this->rows &&
 		   area.bottom >= 0 && area.bottom < this->rows &&
-		   area.left >= 0 && area.left < this->cols && 
+		   area.left >= 0 && area.left < this->cols &&
 		   area.right >= 0 && area.right < this->cols;
 }
 
@@ -216,7 +220,7 @@ void Engine::_moveConsole(int x,int y) const{
 void Engine::_hideBrush() const {
 	CONSOLE_CURSOR_INFO cur;
 	cur.dwSize = 1;
-	cur.bVisible = false;  
+	cur.bVisible = false;
 	SetConsoleCursorInfo(this->console, &cur);
 }
 
@@ -234,7 +238,7 @@ void Engine::_moveBrush(int row,int col) {
 }
 
 void Engine::_setFontSize(int x,int y) const{
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); 
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	PCONSOLE_FONT_INFOEX lpConsoleCurrentFontEx = new CONSOLE_FONT_INFOEX() ;
 	lpConsoleCurrentFontEx->cbSize = sizeof(CONSOLE_FONT_INFOEX);
 	GetCurrentConsoleFontEx(hConsole,0,lpConsoleCurrentFontEx);
@@ -247,7 +251,7 @@ void Engine::_resizeConsole(int rows,int cols) const{
 
 	++cols;
 	if( this->debug ) rows += 2;
-	
+
 	char *buf = new char[50];
 	sprintf_s(buf,50,"mode %d, %d",cols,rows);
 	system(buf);

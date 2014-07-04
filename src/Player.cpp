@@ -1,9 +1,8 @@
-#include "stdafx.h"
 #include "Player.h"
 
 Player::Player(Engine &e,Texture &t, int x, int y,Map &m): Object(e,t,x,y), Creature(), map(m) {
 	this->speed = 3;
-	
+
 }
 
 int Player::_x() const {
@@ -35,7 +34,7 @@ void Player::move() {
 
 void Player::_moveX() {
 	int mv = this->_x();
-	if( !mv ) return;	
+	if( !mv ) return;
 
 	if( this->position.x + mv < 0 ) {
 		this->position.x = 0;
@@ -45,7 +44,7 @@ void Player::_moveX() {
 		this->position.x = this->engine->getWidth() - this->width;
 		return;
 	}
-	
+
 
 	if(mv > 0) {
 		// moving right
@@ -65,7 +64,7 @@ void Player::_moveX() {
 }
 
 void Player::_moveY() {
-	if( this->_inAir() ) 
+	if( this->_inAir() )
 		this->position.y++;
 
 	if( this->_inGround() )
